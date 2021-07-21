@@ -542,8 +542,13 @@
 
   var handleCopyPhone = function(phone) {
     try {
-      window.navigator.clipboard.writeText(phone);
-      alert('复制成功');
+      window.navigator.clipboard.writeText(phone)
+        .then(function() {
+          alert('复制成功');
+        })
+        .catch(function() {
+          alert('请手动复制或直接呼叫');
+        });
     } catch {
       alert('请手动复制或直接呼叫');
     }
