@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>河南暴雨救援电话</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    padding: 20px;
+    font-size: 14px;
+  }
+
+  a {
+    background-color: transparent;
+    text-decoration: none;
+    color: #1890ff;
+  }
+
+  button {
+    min-width: 80px;
+    font-size: 14px;
+    line-height: 16px;
+    border: 1px solid #d9d9d9;
+    background-color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 12px 12px 0;
+  }
+
+  button.active {
+    color: #ffffff;
+    background-color: #1890ff;
+  }
+
+  .city {
+    margin-bottom: 12px;
+  }
+
+  .team {
+    margin-bottom: 60px;
+  }
+
+  .team-item {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 8px;
+    line-height: 24px;
+    margin-bottom: 12px;
+  }
+
+  .team-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .team-name {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .team-captain {
+    font-size: 14px;
+  }
+
+  .team-phone,
+  .team-call,
+  .team-copy {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .team-phone,
+  .team-call {
+    margin-right: 10px;
+  }
+</style>
+<script>
+  var cityMap = {
+    zhengzhou: {
+      name: '郑州',
+      teams: [
+        {
+          name: '郑州市红十字水上义务救援队',
+          captain: '牛振西',
+          phone: '13938568990',
+        },
+        {
+          name: '郑州红十字蓝天应急救援队',
+          captain: '李志鹏',
+          phone: '13838332525',
+        },
+        {
+          name: '河南省应急救援协会',
+          captain: '陈水全',
+          phone: '13838336788',
+        },
+        {
+          name: '新郑市神鹰救援队',
+          captain: '吴国钦',
+          phone: '13253381110',
+        },
+        {
+          name: '新郑市蓝天救援队',
+          captain: '秦军峰',
+          phone: '13733199101',
+        },
+      ],
+    },
+    kaifeng: {
+      name: '开封',
+      teams: [
+        {
+          name: '开封蓝天救援队',
+          captain: '张海祥',
+          phone: '13837835001',
+        },
+        {
+          name: '开封市无线电协会应急通信大队',
+          captain: '康伟',
+          phone: '18503781818',
+        },
+        {
+          name: '开封市红豹救援队',
+          captain: '柴倩倩',
+          phone: '18803789668',
+        },
+      ],
+    },
+    luoyang: {
+      name: '洛阳',
+      teams: [
+        {
+          name: '洛阳市神龙水上义务搜救队',
+          captain: '杨红山',
+          phone: '15670399937',
+        },
+        {
+          name: '洛阳市神鹰救援队',
+          captain: '张超伟',
+          phone: '15538837110',
+        },
+        {
+          name: '伊川县神鹰救援队',
+          captain: '梁绪伟',
+          phone: '15036999699',
+        },
+      ],
+    },
+    pingdingshan: {
+      name: '平顶山',
+      teams: [
+        {
+          name: '平顶山市永安应急救援队',
+          captain: '杜全甫',
+          phone: '13949469283',
+        },
+        {
+          name: '救援协会郏县应急队',
+          captain: '何邵舟',
+          phone: '13383999505',
+        },
+        {
+          name: '义工联合蓝天救援队',
+          captain: '李伟峰',
+          phone: '17335236002',
+        },
+      ],
+    },
+    anyang: {
+      name: '安阳市',
+      teams: [
+        {
+          name: '红旗渠应急救援中心',
+          captain: '杨永峰',
+          phone: '18567769958',
+        },
+        {
+          name: '内黄县枣乡应急救援中心',
+          captain: '朱志刚',
+          phone: '15890758666',
+        },
+        {
+          name: '林州市蓝天救援队',
+          captain: '杨志军',
+          phone: '13603461315',
+        },
+        {
+          name: '滑县应急救援协会',
+          captain: '赵彦军',
+          phone: '18637288000',
+        },
+      ],
+    },
+    hebi: {
+      name: '鹤壁',
+      teams: [
+        {
+          name: '淇县斑马救援队',
+          captain: '韦玉其',
+          phone: '17630396099',
+        },
+        {
+          name: '山城区无疆公益救援协会',
+          captain: '钱宏滔',
+          phone: '17719900007',
+        },
+      ],
+    },
+    xinxiang: {
+      name: '新乡',
+      teams: [
+        {
+          name: '新乡市斑马应急救援中心',
+          captain: '柴守勇',
+          phone: '13333804449',
+        },
+        {
+          name: '退役军人应急救援中心',
+          captain: '刘海军',
+          phone: '13525022282',
+        },
+      ],
+    },
+    jiaozuo: {
+      name: '焦作',
+      teams: [
+        {
+          name: '焦作市应急救援协会',
+          captain: '张昊',
+          phone: '18623911479',
+        },
+        {
+          name: '温县应急救援服务中心',
+          captain: '张彦兵',
+          phone: '15036520006',
+        },
+      ],
+    },
+    puyang: {
+      name: '濮阳',
+      teams: [
+        {
+          name: '濮阳市红十字救援队',
+          captain: '刘冠中',
+          phone: '13839396699',
+        },
+        {
+          name: '濮阳市中安众联应急救援服务中心',
+          captain: '徐兴斌',
+          phone: '13030314598',
+        },
+        {
+          name: '濮阳市工程机械行业协会应急救',
+          captain: '丁建国',
+          phone: '13503938576',
+        },
+        {
+          name: '清丰县“红十字”应急救援队',
+          captain: '朱志芳',
+          phone: '13513935088',
+        },
+      ],
+    },
+    xuchang: {
+      name: '许昌',
+      teams: [
+        {
+          name: '许昌市应急救援协会',
+          captain: '高煜',
+          phone: '13903990656',
+        },
+        {
+          name: '许昌市工程机械行业协会',
+          captain: '胡结实',
+          phone: '15937455885',
+        },
+        {
+          name: '长葛市红十字志愿者协会',
+          captain: '胥忠义',
+          phone: '13462165087',
+        },
+        {
+          name: '禹州市应急救援协会',
+          captain: '王俊峰',
+          phone: '13937458259',
+        },
+        {
+          name: '许昌市魏都区蓝天救援队',
+          captain: '俎小娟',
+          phone: '13849890188',
+        },
+      ],
+    },
+    luohe: {
+      name: '漯河',
+      teams: [
+        {
+          name: '中青应急救援队',
+          captain: '信天游',
+          phone: '18803950088',
+        },
+        {
+          name: '漯河水上船员志愿者协会',
+          captain: '张红锋',
+          phone: '18939547555',
+        },
+        {
+          name: '漯河市无线电协会',
+          captain: '汪世奇',
+          phone: '18639533339',
+        },
+        {
+          name: '漯河市业余无线电运动协会',
+          captain: '翟阳阳',
+          phone: '13503952586',
+        },
+        {
+          name: '临颍蓝天救援队',
+          captain: '翟勇',
+          phone: '13603471997',
+        },
+      ],
+    },
+    nanyang: {
+      name: '南阳',
+      teams: [
+        {
+          name: '城区蓝天救援中心',
+          captain: '范海涛',
+          phone: '15688112117',
+        },
+        {
+          name: '镇平县蓝天救援队',
+          captain: '张界',
+          phone: '13937707520',
+        },
+        {
+          name: '桐柏蓝天救援队',
+          captain: '刘博',
+          phone: '13598233396',
+        },
+      ],
+    },
+    shangqiu: {
+      name: '商丘',
+      teams: [
+        {
+          name: '商丘市水上义务救援队',
+          captain: '黄伟',
+          phone: '13700830066',
+        },
+        {
+          name: '商丘市蓝天救援队',
+          captain: '王勇',
+          phone: '13837034774',
+        },
+        {
+          name: '商丘市汽车摩托车运动协会 (越野 e 族)',
+          captain: '崔强',
+          phone: '13598398898',
+        },
+      ],
+    },
+    xinyang: {
+      name: '信阳',
+      teams: [
+        {
+          name: '信阳市蓝天救援队',
+          captain: '喻忠强',
+          phone: '13603761722',
+        },
+        {
+          name: '淮滨县蓝天救援队',
+          captain: '喻勇',
+          phone: '13803765810',
+        },
+        {
+          name: '潢川县蓝天救援队',
+          captain: '陈俊',
+          phone: '15637661000',
+        },
+        {
+          name: '固始蓝天救援队',
+          captain: '陶明洋',
+          phone: '18348477555',
+        },
+        {
+          name: '固始神州救援队',
+          captain: '任光磊',
+          phone: '15537652283',
+        },
+      ],
+    },
+    zhoukou: {
+      name: '周口',
+      teams: [
+        {
+          name: '周口蓝天救援队',
+          captain: '朱健康',
+          phone: '13838668228',
+        },
+        {
+          name: '项城应急蓝天救援队',
+          captain: '张海广',
+          phone: '17633979958',
+        },
+        {
+          name: '项城水上义务救援队',
+          captain: '李建国',
+          phone: '13938060537',
+        },
+        {
+          name: '鹿邑神鹰救援队',
+          captain: '张正江',
+          phone: '13460020166',
+        },
+        {
+          name: '周口川汇蓝天救援队',
+          captain: '孟坤',
+          phone: '15346090666',
+        },
+      ],
+    },
+    zhumadian: {
+      name: '驻马店',
+      teams: [
+        {
+          name: '驻马店市红十字蛟龙水上应急搜',
+          captain: '赵亚洲',
+          phone: '13598903988',
+        },
+        {
+          name: '驻马店市蓝天救援队',
+          captain: '李振',
+          phone: '17339671661',
+        },
+        {
+          name: '驻马店市红十字会山地救援队',
+          captain: '段国富',
+          phone: '15036911069',
+        },
+        {
+          name: '泌阳县红十字蛟龙应急救援队中',
+          captain: '平恩东',
+          phone: '17633893777',
+        },
+        {
+          name: '泌阳县蓝天救援队',
+          captain: '王建磊',
+          phone: '13097097888',
+        },
+        {
+          name: '西平县至善公益志愿者协会蛟龙',
+          captain: '耿广德',
+          phone: '15893908715',
+        },
+        {
+          name: '汝南县红十字蛟龙义务救援志愿',
+          captain: '胡汝生',
+          phone: '13839636415',
+        },
+        {
+          name: '上蔡蓝天救援队',
+          captain: '宋卜',
+          phone: '13949564518',
+        },
+      ],
+    },
+    jiyuan: {
+      name: '济源',
+      teams: [
+        {
+          name: '济源市红十字应急救援队',
+          captain: '关永科',
+          phone: '13303910588',
+        },
+        {
+          name: '济源市应急救援协会',
+          captain: '吕涛',
+          phone: '18790020089',
+        },
+      ],
+    },
+  };
+</script>
+<body>
+  <div class="city"></div>
+  <div class="team"></div>
+</body>
+<script>
+  var $city = document.querySelector('.city');
+  var $team = document.querySelector('.team');
+
+  var create = function(type, props, children = '') {
+    var $el = document.createElement(type);
+
+    Object.keys(props).forEach(function(key) {
+      if (key.indexOf('on') === 0) {
+        $el[key] = props[key];
+      } else {
+        $el.setAttribute(key, props[key]);
+      }
+    });
+
+    $el.innerHTML = children;
+
+    return $el;
+  };
+
+  var appendCity = function() {
+    Object.keys(cityMap).forEach(function(cityId) {
+      $city.appendChild(create('button', {
+        class: 'city-item',
+        cityid: cityId,
+        onclick: handleCityClick.bind(this, cityId),
+      }, cityMap[cityId].name));
+    });
+  };
+
+  var handleCityClick = function(cityId) {
+    document.querySelectorAll('.city-item').forEach(function($item) {
+      $item.getAttribute('cityid') === cityId
+        ? $item.classList.add('active')
+        : $item.classList.remove('active');
+
+      updateTeam(cityId);
+    });
+  };
+
+  var handleCopyPhone = function(phone) {
+    try {
+      window.navigator.clipboard.writeText(phone);
+      alert('复制成功');
+    } catch {
+      alert('请手动复制或直接呼叫');
+    }
+  };
+
+  var updateTeam = function(cityId) {
+    $team.innerHTML = '';
+
+    cityMap[cityId].teams.forEach(function(team) {
+      var phoneHref = 'tel:' + team.phone;
+      var copyClick = handleCopyPhone.bind(this, team.phone);
+
+      var $item = create('div', { class: 'team-item' });
+      var $name = create('div', { class: 'team-name' }, team.name);
+      var $captain = create('div', { class: 'team-captain' }, team.captain);
+      var $options = create('a', { class: 'team-options' });
+      var $phone = create('a', { class: 'team-phone', href: phoneHref }, team.phone);
+      var $call = create('a', { class: 'team-call', href: phoneHref }, '呼叫');
+      var $copy = create('a', { class: 'team-copy', href: 'javascript:;', onclick: copyClick }, '复制');
+
+      $options.appendChild($phone);
+      $options.appendChild($call);
+      $options.appendChild($copy);
+      $item.appendChild($name);
+      $item.appendChild($captain);
+      $item.appendChild($options);
+      $team.appendChild($item);
+    });
+  };
+
+  appendCity();
+  handleCityClick(Object.keys(cityMap)[0]);
+</script>
+</html>
